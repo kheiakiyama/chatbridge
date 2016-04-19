@@ -26,6 +26,7 @@ namespace ChatChannelBot
         {
             if (message.Type == "Message")
             {
+                Trace.WriteLine(message.SourceText);
                 Trace.WriteLine(message.Text);
                 if (message.Text.ToLower() == CreateCommand)
                 {
