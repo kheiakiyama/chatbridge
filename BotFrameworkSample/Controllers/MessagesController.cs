@@ -26,7 +26,7 @@ namespace BotFrameworkSample
                 int length = (message.Text ?? string.Empty).Length;
 
                 // return our reply to the user
-                return message.CreateReplyMessage($"You sent {length} characters");
+                return message.CreateReplyMessage($"You sent {length} characters\r\n\r\nChannelId:{message.From.ChannelId} Address:{message.From.Address} Id:{message.From.Id} Name:{message.From.Name} Me: {message.To.Address}");
             }
             else
             {
