@@ -3,6 +3,7 @@ using Microsoft.WindowsAzure.Storage.Table;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,9 @@ namespace ChatBridgeModel
     {
         public ChatAccountRepository()
         {
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(Settings.Get("StorageConnectionString"));
+            var connectionString = Settings.Get("StorageConnectionString");
+            Trace.WriteLine(connectionString);
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(connectionString);
             CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
             m_Table = tableClient.GetTableReference(tableName);
         }
