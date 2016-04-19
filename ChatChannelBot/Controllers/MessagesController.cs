@@ -9,7 +9,7 @@ using Microsoft.Bot.Connector;
 using Microsoft.Bot.Connector.Utilities;
 using Newtonsoft.Json;
 
-namespace BotFrameworkSample
+namespace ChatChannelBot
 {
     [BotAuthentication]
     public class MessagesController : ApiController
