@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PipeMessageJob", "PipeMessa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatChannelBot", "ChatChannelBot\ChatChannelBot.csproj", "{A8BA1066-5695-4D71-ABB4-65E5A5E0C3D4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatBridgeModel", "ChatBridgeModel\ChatBridgeModel.csproj", "{EAC93B9C-21F2-4C32-B2DD-5EED9683F5FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{A8BA1066-5695-4D71-ABB4-65E5A5E0C3D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8BA1066-5695-4D71-ABB4-65E5A5E0C3D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8BA1066-5695-4D71-ABB4-65E5A5E0C3D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAC93B9C-21F2-4C32-B2DD-5EED9683F5FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAC93B9C-21F2-4C32-B2DD-5EED9683F5FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAC93B9C-21F2-4C32-B2DD-5EED9683F5FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAC93B9C-21F2-4C32-B2DD-5EED9683F5FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -117,6 +117,12 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ChatBridgeModel\ChatBridgeModel.csproj">
+      <Project>{eac93b9c-21f2-4c32-b2dd-5eed9683f5fb}</Project>
+      <Name>ChatBridgeModel</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

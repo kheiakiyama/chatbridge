@@ -8,12 +8,15 @@ using System.Web.Http.Description;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Connector.Utilities;
 using Newtonsoft.Json;
+using ChatBridgeModel;
 
 namespace ChatChannelBot
 {
     [BotAuthentication]
     public class MessagesController : ApiController
     {
+        private ChatAccountRepository m_Repository = new ChatAccountRepository();
+
         /// <summary>
         /// POST: api/Messages
         /// Receive a message from a user and reply to it
@@ -22,6 +25,10 @@ namespace ChatChannelBot
         {
             if (message.Type == "Message")
             {
+                if (message.Text.ToLower() == CreateCommand)
+                {
+                    return await CreateBridgeMessage(message);
+                }
                 // calculate something for us to return
                 int length = (message.Text ?? string.Empty).Length;
 
@@ -33,6 +40,14 @@ namespace ChatChannelBot
                 return HandleSystemMessage(message);
             }
         }
+
+        private async Task<Message> CreateBridgeMessage(Message message)
+        {
+            var res = await m_Repository.CreateBridge(message.From.Id, message.From.ChannelId);
+            return message.CreateReplyMessage($"bridge created. Please tell them chat with you.\r\n`open bridge {res.ToString()}`");
+        }
+
+        private readonly static string CreateCommand = "create bridge";
 
         private Message HandleSystemMessage(Message message)
         {
