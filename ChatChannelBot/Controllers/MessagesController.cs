@@ -9,6 +9,7 @@ using Microsoft.Bot.Connector;
 using Microsoft.Bot.Connector.Utilities;
 using Newtonsoft.Json;
 using ChatBridgeModel;
+using System.Diagnostics;
 
 namespace ChatChannelBot
 {
@@ -25,6 +26,7 @@ namespace ChatChannelBot
         {
             if (message.Type == "Message")
             {
+                Debug.WriteLine(message.Text);
                 if (message.Text.ToLower() == CreateCommand)
                 {
                     return await CreateBridgeMessage(message);
