@@ -13,7 +13,7 @@ namespace ChatBridgeModel
     {
         public ChatAccountRepository()
         {
-            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(ConfigurationManager.AppSettings["StorageConnectionString"]);
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse(Settings.Get("StorageConnectionString"));
             CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
             m_Table = tableClient.GetTableReference(tableName);
         }
