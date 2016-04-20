@@ -71,7 +71,7 @@ namespace ChatBridgeModel
             var newId = Guid.NewGuid();
             var newAccount = new ChatAccount()
             {
-                PartitionKey = account.Id,
+                PartitionKey = ownerAccount.UserId,
                 RowKey = newId.ToString(),
                 OwnerId = ownerAccount.UserId,
                 UserId = account.Id,
