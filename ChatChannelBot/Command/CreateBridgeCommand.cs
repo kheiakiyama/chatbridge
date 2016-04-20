@@ -24,7 +24,7 @@ namespace ChatChannelBot.Command
 
         public async Task<Message> Reply(Message message)
         {
-            var res = await Repository.CreateBridge(message.From.Id, message.From.ChannelId);
+            var res = await Repository.CreateBridge(message.From);
             return message.CreateReplyMessage($"bridge created. Please tell them chat with you.\r\n`open bridge {res}`");
         }
     }

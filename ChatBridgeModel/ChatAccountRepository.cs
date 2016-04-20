@@ -1,4 +1,5 @@
-﻿using Microsoft.WindowsAzure.Storage;
+﻿using Microsoft.Bot.Connector;
+using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Table;
 using System;
 using System.Collections.Generic;
@@ -28,58 +29,70 @@ namespace ChatBridgeModel
         /// <summary>
         /// 接続の開始
         /// </summary>
-        /// <param name="userId">UserId</param>
-        /// <param name="channelId">ChannelId</param>
-        /// <returns></returns>
-        public async Task<string> CreateBridge(string userId, string channelId)
+        /// <param name="account">UserAccount</param>
+        /// <returns>RowKey Unique Id like a GUID</returns>
+        public async Task<string> CreateBridge(ChannelAccount account)
         {
-            var find = await FindBridge(userId);
+            var find = await FindBridge(account.Id);
             if (!string.IsNullOrEmpty(find))
                 return find;
 
             var id = Guid.NewGuid();
-            var account = new ChatAccount() {
-                PartitionKey = userId,
+            var newAccount = new ChatAccount() {
+                PartitionKey = account.Id,
                 RowKey = id.ToString(),
-                OwnerId = userId,
-                UserId = userId,
-                ChannelId = channelId,
+                OwnerId = account.Id,
+                UserId = account.Id,
+                Name = account.Name,
+                ChannelId = account.ChannelId,
                 Created = DateTime.UtcNow,
                 Modified = DateTime.UtcNow,
             };
-            await m_Table.ExecuteAsync(TableOperation.Insert(account));
-            return account.RowKey;
+            await m_Table.ExecuteAsync(TableOperation.Insert(newAccount));
+            return newAccount.RowKey;
         }
 
-        public async Task<bool> OpenBridge(Guid id, string userId, string channelId)
+        /// <summary>
+        /// 既存の接続に参加
+        /// </summary>
+        /// <param name="id">RowKey</param>
+        /// <param name="account">UserAccount</param>
+        /// <returns>接続したChatAccount</returns>
+        public async Task<ChatAccount> OpenBridge(Guid id, ChannelAccount account)
         {
             TableQuery<ChatAccount> chatQuery = new TableQuery<ChatAccount>()
               .Where(TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal, id.ToString()));
             var response = await m_Table.ExecuteQuerySegmentedAsync(chatQuery, null);
             if (response.Results.Count == 0)
-                return false;
+                return null;
 
             var newId = Guid.NewGuid();
-            var account = new ChatAccount()
+            var newAccount = new ChatAccount()
             {
-                PartitionKey = userId,
+                PartitionKey = account.Id,
                 RowKey = newId.ToString(),
                 OwnerId = response.Results[0].UserId,
-                UserId = userId,
-                ChannelId = channelId,
+                UserId = account.Id,
+                ChannelId = account.ChannelId,
                 Created = DateTime.UtcNow,
                 Modified = DateTime.UtcNow,
             };
-            await m_Table.ExecuteAsync(TableOperation.Insert(account));
-            return true;
+            await m_Table.ExecuteAsync(TableOperation.Insert(newAccount));
+            return newAccount;
         }
 
         private async Task<string> FindBridge(string ownerId)
         {
+            var bridges = await FindBridges(ownerId);
+            return bridges.Length > 0 ? bridges[0].RowKey : null;
+        }
+
+        public async Task<ChatAccount[]> FindBridges(string ownerId)
+        {
             TableQuery<ChatAccount> chatQuery = new TableQuery<ChatAccount>()
                 .Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, ownerId));
             var response = await m_Table.ExecuteQuerySegmentedAsync(chatQuery, null);
-            return response.Results.Count > 0 ? response.Results[0].RowKey : null;
+            return response.Results.Count > 0 ? response.Results.ToArray() : new ChatAccount[] { };
         }
 
         public IEnumerable<ChatAccount> GetConnected(Guid id)
