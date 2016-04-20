@@ -18,10 +18,10 @@ namespace ChatChannelBot.Command
 
         public async Task<Message> Reply(Message message)
         {
-            var resultString = Regex.Replace(message.Text.ToLower(), @"^[{(]?[0-9A-F]{8}[-]?([0-9A-F]{4}[-]?){3}[0-9A-F]{12}[)}]?$", "'$0'", RegexOptions.IgnoreCase);
+            var idText = Regex.Match(message.Text.ToLower(), @"(\{){0,1}[0-9a-f]{8}\-[0-9a-f]{4}\-[0-9a-f]{4}\-[0-9a-f]{4}\-[0-9a-f]{12}(\}){0,1}").Value;
             Guid id;
-            if (!Guid.TryParse(resultString, out id))
-                return message.CreateReplyMessage($"can't convert {resultString}");
+            if (!Guid.TryParse(idText, out id))
+                return message.CreateReplyMessage($"can't convert {idText}");
             var account = await CommandTool.Instance.Repository.OpenBridge(id, message.From);
             if (account != null)
             {
