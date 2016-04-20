@@ -18,8 +18,9 @@ namespace ChatChannelBot.Command
         public async Task<Message> Reply(Message message)
         {
             var res = await CommandTool.Instance.Repository.CreateBridge(message.From);
-            message.SetBotUserData(CommandTool.PropertyIdName, res);
-            return message.CreateReplyMessage($"bridge created. Please tell them chat with you.\r\n`open bridge {res}`");
+            var msg = message.CreateReplyMessage($"bridge created. Please tell them chat with you.\r\n`open bridge {res}`");
+            msg.SetBotUserData(CommandTool.PropertyIdName, res);
+            return msg;
         }
     }
 }

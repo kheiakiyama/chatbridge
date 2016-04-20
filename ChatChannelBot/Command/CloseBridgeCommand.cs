@@ -20,7 +20,7 @@ namespace ChatChannelBot.Command
             var idText = message.GetBotUserData<string>(CommandTool.PropertyIdName);
             Guid id;
             if (!Guid.TryParse(idText, out id))
-                return null;
+                return message.CreateReplyMessage($"can't convert {idText}.");
             var res = await CommandTool.Instance.Repository.CloseBridge(id);
             return message.CreateReplyMessage($"bridge closed. see you next time!");
         }
