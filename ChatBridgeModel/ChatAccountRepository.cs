@@ -64,6 +64,10 @@ namespace ChatBridgeModel
             if (ownerAccount == null)
                 return null;
 
+            var self = await FindBridges(ownerAccount.UserId, account.Id);
+            if (self != null)
+                return self;
+
             var newId = Guid.NewGuid();
             var newAccount = new ChatAccount()
             {
@@ -71,6 +75,7 @@ namespace ChatBridgeModel
                 RowKey = newId.ToString(),
                 OwnerId = ownerAccount.UserId,
                 UserId = account.Id,
+                Name = account.Name,
                 ChannelId = account.ChannelId,
                 Created = DateTime.UtcNow,
                 Modified = DateTime.UtcNow,
@@ -114,6 +119,17 @@ namespace ChatBridgeModel
                 .Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, ownerId));
             var response = await m_Table.ExecuteQuerySegmentedAsync(chatQuery, null);
             return response.Results.Count > 0 ? response.Results.ToArray() : new ChatAccount[] { };
+        }
+        
+        private async Task<ChatAccount> FindBridges(string ownerId, string userId)
+        {
+            TableQuery<ChatAccount> chatQuery = new TableQuery<ChatAccount>()
+                .Where(TableQuery.CombineFilters(
+                    TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, ownerId),
+                    TableOperators.And,
+                    TableQuery.GenerateFilterCondition("UserId", QueryComparisons.Equal, userId)));
+            var response = await m_Table.ExecuteQuerySegmentedAsync(chatQuery, null);
+            return response.Results.Count > 0 ? response.Results[0] : null;
         }
 
         public IEnumerable<ChatAccount> GetConnected(Guid id)
