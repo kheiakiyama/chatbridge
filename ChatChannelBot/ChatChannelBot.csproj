@@ -128,6 +128,7 @@
     <Compile Include="ChatRequest.cs" />
     <Compile Include="Command\Commands.cs" />
     <Compile Include="Command\CommandTool.cs" />
+    <Compile Include="Command\CloseBridgeCommand.cs" />
     <Compile Include="Command\OpenBridgeCommand.cs" />
     <Compile Include="Command\CreateBridgeCommand.cs" />
     <Compile Include="Command\ICommand.cs" />

@@ -15,6 +15,7 @@ namespace ChatChannelBot.Command
         public ChatRequest Request { get; private set; }
         
         public static CommandTool Instance { get; private set; }
+        public static readonly string PropertyIdName = "Id";
 
         static CommandTool()
         {

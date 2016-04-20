@@ -8,17 +8,20 @@ using ChatBridgeModel;
 
 namespace ChatChannelBot.Command
 {
-    public class CreateBridgeCommand : ICommand
+    public class CloseBridgeCommand : ICommand
     {
         public bool DoHandle(Message message)
         {
-            return message.Text.ToLower() == "create bridge";
+            return message.Text.ToLower() == "close bridge";
         }
 
         public async Task<Message> Reply(Message message)
         {
-            var res = await CommandTool.Instance.Repository.CreateBridge(message.From);
-            message.SetBotUserData(CommandTool.PropertyIdName, res);
+            var idText = message.GetBotUserData<string>(CommandTool.PropertyIdName);
+            Guid id;
+            if (!Guid.TryParse(idText, out id))
+                return null;
+            var res = await CommandTool.Instance.Repository.CloseBridge(id);
             return message.CreateReplyMessage($"bridge created. Please tell them chat with you.\r\n`open bridge {res}`");
         }
     }

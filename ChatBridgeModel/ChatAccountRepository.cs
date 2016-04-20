@@ -60,10 +60,8 @@ namespace ChatBridgeModel
         /// <returns>接続したChatAccount</returns>
         public async Task<ChatAccount> OpenBridge(Guid id, ChannelAccount account)
         {
-            TableQuery<ChatAccount> chatQuery = new TableQuery<ChatAccount>()
-              .Where(TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal, id.ToString()));
-            var response = await m_Table.ExecuteQuerySegmentedAsync(chatQuery, null);
-            if (response.Results.Count == 0)
+            var ownerAccount = await FindAccounts(id);
+            if (ownerAccount == null)
                 return null;
 
             var newId = Guid.NewGuid();
@@ -71,7 +69,7 @@ namespace ChatBridgeModel
             {
                 PartitionKey = account.Id,
                 RowKey = newId.ToString(),
-                OwnerId = response.Results[0].UserId,
+                OwnerId = ownerAccount.UserId,
                 UserId = account.Id,
                 ChannelId = account.ChannelId,
                 Created = DateTime.UtcNow,
@@ -79,6 +77,29 @@ namespace ChatBridgeModel
             };
             await m_Table.ExecuteAsync(TableOperation.Insert(newAccount));
             return newAccount;
+        }
+
+        private async Task<ChatAccount> FindAccounts(Guid id)
+        {
+            TableQuery<ChatAccount> chatQuery = new TableQuery<ChatAccount>()
+                .Where(TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal, id.ToString()));
+            var response = await m_Table.ExecuteQuerySegmentedAsync(chatQuery, null);
+            return response.Results.Count == 0 ? null : response.Results[0];
+        }
+
+        /// <summary>
+        /// 接続の終了
+        /// </summary>
+        /// <param name="id">RowKey</param>
+        /// <returns>True: Success Close</returns>
+        public async Task<bool> CloseBridge(Guid id)
+        {
+            var self = await FindAccounts(id);
+            if (self == null)
+            return false;
+
+            await m_Table.ExecuteAsync(TableOperation.Delete(self));
+            return true;
         }
 
         private async Task<string> FindBridge(string ownerId)

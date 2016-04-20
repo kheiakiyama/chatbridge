@@ -25,6 +25,7 @@ namespace ChatChannelBot.Command
             var account = await CommandTool.Instance.Repository.OpenBridge(id, message.From);
             if (account != null)
             {
+                message.SetBotUserData(CommandTool.PropertyIdName, account.RowKey);
                 await SendMessageConnected(account);
                 return message.CreateReplyMessage($"open your bridge.");
             }
