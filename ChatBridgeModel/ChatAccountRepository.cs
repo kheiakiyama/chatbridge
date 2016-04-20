@@ -19,6 +19,7 @@ namespace ChatBridgeModel
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(connectionString);
             CloudTableClient tableClient = storageAccount.CreateCloudTableClient();
             m_Table = tableClient.GetTableReference(tableName);
+            m_Table.CreateIfNotExists();
         }
 
         private static readonly string tableName = "chataccount";
