@@ -22,7 +22,7 @@ namespace ChatChannelBot.Command
             if (!Guid.TryParse(idText, out id))
                 return null;
             var res = await CommandTool.Instance.Repository.CloseBridge(id);
-            return message.CreateReplyMessage($"bridge created. Please tell them chat with you.\r\n`open bridge {res}`");
+            return message.CreateReplyMessage($"bridge closed. see you next time!");
         }
     }
 }

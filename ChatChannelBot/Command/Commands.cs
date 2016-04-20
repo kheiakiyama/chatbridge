@@ -13,6 +13,7 @@ namespace ChatChannelBot.Command
         {
             yield return new CreateBridgeCommand();
             yield return new OpenBridgeCommand();
+            yield return new CloseBridgeCommand();
         }
     }
 }
