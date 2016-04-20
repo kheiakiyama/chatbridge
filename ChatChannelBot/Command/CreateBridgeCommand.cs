@@ -10,13 +10,6 @@ namespace ChatChannelBot.Command
 {
     public class CreateBridgeCommand : ICommand
     {
-        public ChatAccountRepository Repository { get; private set; }
-
-        public CreateBridgeCommand(ChatAccountRepository repos)
-        {
-            Repository = repos;
-        }
-
         public bool DoHandle(Message message)
         {
             return message.Text.ToLower() == "create bridge";
@@ -24,7 +17,7 @@ namespace ChatChannelBot.Command
 
         public async Task<Message> Reply(Message message)
         {
-            var res = await Repository.CreateBridge(message.From);
+            var res = await CommandTool.Instance.Repository.CreateBridge(message.From);
             return message.CreateReplyMessage($"bridge created. Please tell them chat with you.\r\n`open bridge {res}`");
         }
     }
