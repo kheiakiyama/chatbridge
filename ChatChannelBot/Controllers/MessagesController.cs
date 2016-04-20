@@ -47,7 +47,7 @@ namespace ChatChannelBot
         private async Task<Message> CreateBridgeMessage(Message message)
         {
             var res = await m_Repository.CreateBridge(message.From.Id, message.From.ChannelId);
-            return message.CreateReplyMessage($"bridge created. Please tell them chat with you.\r\n`open bridge {res.ToString()}`");
+            return message.CreateReplyMessage($"bridge created. Please tell them chat with you.\r\n`open bridge {res}`");
         }
 
         private readonly static string CreateCommand = "create bridge";

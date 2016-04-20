@@ -31,16 +31,16 @@ namespace ChatBridgeModel
         /// <param name="userId">UserId</param>
         /// <param name="channelId">ChannelId</param>
         /// <returns></returns>
-        public async Task<Guid> CreateBridge(string userId, string channelId)
+        public async Task<string> CreateBridge(string userId, string channelId)
         {
             var find = await FindBridge(userId);
-            if (find.HasValue)
-                return find.Value;
+            if (!string.IsNullOrEmpty(find))
+                return find;
 
+            var id = Guid.NewGuid();
             var account = new ChatAccount() {
                 PartitionKey = userId,
-                RowKey = GetRowKey(userId, userId),
-                Id = Guid.NewGuid(),
+                RowKey = id.ToString(),
                 OwnerId = userId,
                 UserId = userId,
                 ChannelId = channelId,
@@ -48,25 +48,38 @@ namespace ChatBridgeModel
                 Modified = DateTime.UtcNow,
             };
             await m_Table.ExecuteAsync(TableOperation.Insert(account));
-            return account.Id;
+            return account.RowKey;
         }
 
-        public async Task<bool> ConnectBridge(Guid id, string userId, string channelId)
+        public async Task<bool> OpenBridge(Guid id, string userId, string channelId)
         {
-            return false;
+            TableQuery<ChatAccount> chatQuery = new TableQuery<ChatAccount>()
+              .Where(TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal, id.ToString()));
+            var response = await m_Table.ExecuteQuerySegmentedAsync(chatQuery, null);
+            if (response.Results.Count == 0)
+                return false;
+
+            var newId = Guid.NewGuid();
+            var account = new ChatAccount()
+            {
+                PartitionKey = userId,
+                RowKey = newId.ToString(),
+                OwnerId = response.Results[0].UserId,
+                UserId = userId,
+                ChannelId = channelId,
+                Created = DateTime.UtcNow,
+                Modified = DateTime.UtcNow,
+            };
+            await m_Table.ExecuteAsync(TableOperation.Insert(account));
+            return true;
         }
 
-        private async Task<Guid?> FindBridge(string ownerId)
+        private async Task<string> FindBridge(string ownerId)
         {
             TableQuery<ChatAccount> chatQuery = new TableQuery<ChatAccount>()
                 .Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, ownerId));
             var response = await m_Table.ExecuteQuerySegmentedAsync(chatQuery, null);
-            return response.Results.Count > 0 ? response.Results[0].Id : (Guid?)null;
-        }
-
-        private string GetRowKey(string ownerId, string userId)
-        {
-            return $"{ownerId}-{userId}";
+            return response.Results.Count > 0 ? response.Results[0].RowKey : null;
         }
 
         public IEnumerable<ChatAccount> GetConnected(Guid id)

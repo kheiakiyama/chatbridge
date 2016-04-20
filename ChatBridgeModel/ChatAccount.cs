@@ -9,14 +9,13 @@ namespace ChatBridgeModel
 {
     /*
      *  RowKey Owner(partialKey)  User  Channel
-     *    A-A       A              A     slack
-     *    A-B       A              B     skype
-     *    C-C       C              C     slack
+     *  GuidA       A              A     slack
+     *  GuidA       A              B     skype
+     *  GuidA       C              C     slack
      */
 
     public class ChatAccount : TableEntity
     {
-        public Guid Id { get; set; }
         public string OwnerId { get; set; }
         public string UserId { get; set; }
         public string ChannelId { get; set; }
