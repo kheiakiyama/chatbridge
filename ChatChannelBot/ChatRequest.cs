@@ -1,4 +1,5 @@
-﻿using Microsoft.Bot.Connector;
+﻿using ChatBridgeModel;
+using Microsoft.Bot.Connector;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,5 +31,17 @@ namespace ChatChannelBot
                 Language = "ja"
             };
         }
+
+        public void SetAccountData(Message message, ChatAccount account)
+        {
+            message.SetBotUserData(PropertyAccount, account);
+        }
+
+        public ChatAccount GetAccountData(Message message)
+        {
+            return message.GetBotUserData<ChatAccount>(PropertyAccount);
+        }
+
+        private static readonly string PropertyAccount = "Account";
     }
 }

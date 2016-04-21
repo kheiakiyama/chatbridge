@@ -30,11 +30,11 @@ namespace ChatBridgeModel
         /// 接続の開始
         /// </summary>
         /// <param name="account">UserAccount</param>
-        /// <returns>RowKey Unique Id like a GUID</returns>
-        public async Task<string> CreateBridge(ChannelAccount account)
+        /// <returns>接続したChatAccount</returns>
+        public async Task<ChatAccount> CreateBridge(ChannelAccount account)
         {
             var find = await FindBridge(account.Id);
-            if (!string.IsNullOrEmpty(find))
+            if (find != null)
                 return find;
 
             var id = Guid.NewGuid();
@@ -50,7 +50,7 @@ namespace ChatBridgeModel
                 Modified = DateTime.UtcNow,
             };
             await m_Table.ExecuteAsync(TableOperation.Insert(newAccount));
-            return newAccount.RowKey;
+            return newAccount;
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace ChatBridgeModel
         /// <returns>接続したChatAccount</returns>
         public async Task<ChatAccount> OpenBridge(Guid id, ChannelAccount account)
         {
-            var ownerAccount = await FindAccounts(id);
+            var ownerAccount = await FindAccount(id);
             if (ownerAccount == null)
                 return null;
 
@@ -86,7 +86,7 @@ namespace ChatBridgeModel
             return newAccount;
         }
 
-        private async Task<ChatAccount> FindAccounts(Guid id)
+        private async Task<ChatAccount> FindAccount(Guid id)
         {
             TableQuery<ChatAccount> chatQuery = new TableQuery<ChatAccount>()
                 .Where(TableQuery.GenerateFilterCondition("RowKey", QueryComparisons.Equal, id.ToString()));
@@ -101,18 +101,18 @@ namespace ChatBridgeModel
         /// <returns>True: Success Close</returns>
         public async Task<bool> CloseBridge(Guid id)
         {
-            var self = await FindAccounts(id);
+            var self = await FindAccount(id);
             if (self == null)
-            return false;
+                return false;
 
             await m_Table.ExecuteAsync(TableOperation.Delete(self));
             return true;
         }
 
-        private async Task<string> FindBridge(string ownerId)
+        private async Task<ChatAccount> FindBridge(string ownerId)
         {
             var bridges = await FindBridges(ownerId);
-            return bridges.Length > 0 ? bridges[0].RowKey : null;
+            return bridges.Length > 0 ? bridges[0] : null;
         }
 
         public async Task<ChatAccount[]> FindBridges(string ownerId)

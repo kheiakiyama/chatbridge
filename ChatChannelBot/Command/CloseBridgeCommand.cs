@@ -17,12 +17,13 @@ namespace ChatChannelBot.Command
 
         public async Task<Message> Reply(Message message)
         {
-            var idText = message.GetBotUserData<string>(CommandTool.PropertyIdName);
-            Guid id;
-            if (!Guid.TryParse(idText, out id))
-                return message.CreateReplyMessage($"can't convert {idText}.");
-            var res = await CommandTool.Instance.Repository.CloseBridge(id);
-            return message.CreateReplyMessage($"bridge closed. see you next time!");
+            var account = CommandTool.Instance.Request.GetAccountData(message);
+            if (account == null)
+                return message.CreateReplyMessage($"can't close bridge.");
+            var res = await CommandTool.Instance.Repository.CloseBridge(new Guid(account.RowKey));
+            var msg = message.CreateReplyMessage($"bridge closed. see you next time!");
+            CommandTool.Instance.Request.SetAccountData(msg, null);
+            return msg;
         }
     }
 }

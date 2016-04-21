@@ -27,7 +27,7 @@ namespace ChatChannelBot.Command
             {
                 await SendMessageConnected(account);
                 var msg = message.CreateReplyMessage($"open your bridge.");
-                msg.SetBotUserData(CommandTool.PropertyIdName, account.RowKey);
+                CommandTool.Instance.Request.SetAccountData(msg, account);
                 return msg;
             }
             else
