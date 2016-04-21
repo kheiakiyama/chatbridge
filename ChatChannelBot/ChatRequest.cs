@@ -17,7 +17,7 @@ namespace ChatChannelBot
                 m_Adresses.Add(message.To.ChannelId, message.To.Address);
         }
 
-        public Message CreateMessage(string to, string channelId, string text)
+        public Message CreateMessage(string address, string channelId, string text)
         {
             if (!m_Adresses.ContainsKey(channelId))
                 throw new NotSupportedException();
@@ -25,7 +25,7 @@ namespace ChatChannelBot
             return new Message()
             {
                 From = new ChannelAccount() { ChannelId = channelId, Address = m_Adresses[channelId], },
-                To = new ChannelAccount() { ChannelId = channelId, Address = to },
+                To = new ChannelAccount() { ChannelId = channelId, Address = address },
                 Text = text,
                 Language = "ja"
             };

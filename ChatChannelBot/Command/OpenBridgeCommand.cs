@@ -39,7 +39,7 @@ namespace ChatChannelBot.Command
             var bridges = await CommandTool.Instance.Repository.FindBridges(account.OwnerId);
             foreach (var item in bridges)
             {
-                var msg = CommandTool.Instance.Request.CreateMessage(item.UserId, item.ChannelId, $"{account.Name} connected this bridge.");
+                var msg = CommandTool.Instance.Request.CreateMessage(item.Address, item.ChannelId, $"{account.Name} connected this bridge.");
                 await CommandTool.Instance.Client.Messages.SendMessageAsync(msg);
             }
         }
