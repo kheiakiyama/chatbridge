@@ -37,7 +37,7 @@ namespace ChatChannelBot.Command
         private async Task SendMessageConnected(ChatAccount account)
         {
             var bridges = await CommandTool.Instance.Repository.FindBridges(account.OwnerId);
-            foreach (var item in bridges)
+            foreach (var item in bridges.Where(q => q.UserId != account.UserId))
             {
                 var msg = CommandTool.Instance.Request.CreateMessage(item.Address, item.ChannelId, $"{account.Name} connected this bridge.");
                 await CommandTool.Instance.Client.Messages.SendMessageAsync(msg);
