@@ -1,12 +1,35 @@
-﻿<!DOCTYPE html>
+﻿<!DOCTYPE HTML>
 <html>
 <head>
-    <title></title>
+    <title>Chat Bridge</title>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+    <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 </head>
-<body style="font-family:'Segoe UI'">
-    <h1>ChatChannelBot</h1>
-    <p>Describe your bot here and your terms of use etc.</p>
-    <p>Visit <a href="https://www.botframework.com/">Bot Framework</a> to register your bot. When you register it, remember to set your bot's endpoint to <pre>https://<i>your_bots_hostname</i>/api/messages</p>
+<body>
+    <header id="header">
+        <h1>Chat Bridge</h1>
+        <p>
+            Bridge Chat Text different chat service.<br />
+            Slack, Skype and WebChat</a>.
+        </p>
+    </header>
+    <ul class="icons">
+        <li><a href="https://slack.com/oauth/authorize?scope=incoming-webhook,bot&client_id=11135465285.35803369441"><img alt="Add to Slack" height="40" width="139" src="https://platform.slack-edge.com/img/add_to_slack.png" srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x" /></a></li>
+    </ul>
+    <iframe src='https://webchat.botframework.com/embed/chatbridge?s=k2nED_Y4Gfg.cwA.NDc.c7jRR7xdtm7UHotygCbUGjU5EDX8isWIkrPf-55D18k'
+            width="400"
+            height="300">
+    </iframe>
+    <footer id="footer">
+        <ul class="copyright">
+            <li>&copy; kheiakiyama.</li>
+        </ul>
+    </footer>
+    <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+    <script src="assets/js/main.js"></script>
 </body>
 </html>
