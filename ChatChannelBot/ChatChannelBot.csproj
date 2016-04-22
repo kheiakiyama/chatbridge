@@ -129,6 +129,9 @@
     <Content Include="assets\js\main.js" />
     <Content Include="default.htm" />
     <Content Include="Global.asax" />
+    <Content Include="images\bg01.jpg" />
+    <Content Include="images\bg02.jpg" />
+    <Content Include="images\bg03.jpg" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
