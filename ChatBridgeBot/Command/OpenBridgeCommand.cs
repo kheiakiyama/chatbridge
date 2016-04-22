@@ -7,7 +7,7 @@ using Microsoft.Bot.Connector;
 using ChatBridgeModel;
 using System.Text.RegularExpressions;
 
-namespace ChatChannelBot.Command
+namespace ChatBridgeBot.Command
 {
     public class OpenBridgeCommand : ICommand
     {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Bot.Connector;
 using ChatBridgeModel;
 
-namespace ChatChannelBot.Command
+namespace ChatBridgeBot.Command
 {
     public class CreateBridgeCommand : ICommand
     {

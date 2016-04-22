@@ -10,9 +10,9 @@ using Microsoft.Bot.Connector.Utilities;
 using Newtonsoft.Json;
 using ChatBridgeModel;
 using System.Diagnostics;
-using ChatChannelBot.Command;
+using ChatBridgeBot.Command;
 
-namespace ChatChannelBot
+namespace ChatBridgeBot
 {
     [BotAuthentication]
     public class MessagesController : ApiController

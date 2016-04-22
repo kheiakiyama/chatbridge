@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 
-namespace ChatChannelBot
+namespace ChatBridgeBot
 {
     public static class WebApiConfig
     {
