@@ -343,7 +343,6 @@
 		-webkit-transition: border-bottom-color 0.2s ease, color 0.2s ease;
 		-ms-transition: border-bottom-color 0.2s ease, color 0.2s ease;
 		transition: border-bottom-color 0.2s ease, color 0.2s ease;
-		border-bottom: dotted 1px rgba(255, 255, 255, 0.25);
 		color: #1cb495;
 		text-decoration: none;
 	}
@@ -1041,3 +1040,13 @@
 			}
 
 		}
+
+        #slack_button {
+            height: 30px;
+            width: 104.25px;
+        }
+
+        #skype_button {
+            height: 25px;
+            width: 112px;
+        }
