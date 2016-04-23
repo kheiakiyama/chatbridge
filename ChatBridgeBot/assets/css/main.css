@@ -428,14 +428,11 @@
 		padding: 0.5em 0 0.5em 2em;
 	}
 
-	code {
-		background: rgba(255, 255, 255, 0.125);
-		border-radius: 6px;
-		border: solid 2px rgba(255, 255, 255, 0.35);
-		font-family: "Courier New", monospace;
-		font-size: 0.9em;
-		margin: 0 0.25em;
-		padding: 0.25em 0.65em;
+	pre {
+        background-color: #f7f7f7;
+        color: #333;
+        padding: 2px 4px;
+        font-size: 90%;
 	}
     
 	hr {
@@ -569,72 +566,6 @@
 				ul.icons li a {
 					color: inherit;
 				}
-
-/* Form */
-
-	form {
-		margin: 0 0 2em 0;
-	}
-
-		form .message {
-			text-decoration: none;
-			-moz-transition: opacity 0.2s ease-in-out, -moz-transform 0.2s ease-in-out;
-			-webkit-transition: opacity 0.2s ease-in-out, -webkit-transform 0.2s ease-in-out;
-			-ms-transition: opacity 0.2s ease-in-out, -ms-transform 0.2s ease-in-out;
-			transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
-			-moz-transform: scale(1.05);
-			-webkit-transform: scale(1.05);
-			-ms-transform: scale(1.05);
-			transform: scale(1.05);
-			height: 2.75em;
-			line-height: 2.75em;
-			opacity: 0;
-		}
-
-			form .message:before {
-				-moz-osx-font-smoothing: grayscale;
-				-webkit-font-smoothing: antialiased;
-				font-family: FontAwesome;
-				font-style: normal;
-				font-weight: normal;
-				text-transform: none !important;
-			}
-
-			form .message:before {
-				margin-right: 0.5em;
-			}
-
-			form .message.visible {
-				-moz-transform: scale(1);
-				-webkit-transform: scale(1);
-				-ms-transform: scale(1);
-				transform: scale(1);
-				opacity: 1;
-			}
-
-			form .message.success {
-				color: #1cb495;
-			}
-
-				form .message.success:before {
-					content: '\f00c';
-				}
-
-			form .message.failure {
-				color: #ff2361;
-			}
-
-				form .message.failure:before {
-					content: '\f119';
-				}
-
-	label {
-		color: #fff;
-		display: block;
-		font-size: 0.9em;
-		font-weight: 700;
-		margin: 0 0 1em 0;
-	}
 
 	@-moz-keyframes focus {
 		0% {
@@ -1022,61 +953,6 @@
 		}
 
 	}
-
-/* Signup Form */
-
-	#signup-form {
-		display: -moz-flex;
-		display: -webkit-flex;
-		display: -ms-flex;
-		display: flex;
-		position: relative;
-	}
-
-		#signup-form input[type="text"],
-		#signup-form input[type="password"],
-		#signup-form input[type="email"] {
-			width: 18em;
-		}
-
-		#signup-form > * {
-			margin: 0 0 0 1em;
-		}
-
-		#signup-form > :first-child {
-			margin: 0 0 0 0;
-		}
-
-		@media screen and (max-width: 480px) {
-
-			#signup-form {
-				-moz-flex-direction: column;
-				-webkit-flex-direction: column;
-				-ms-flex-direction: column;
-				flex-direction: column;
-			}
-
-				#signup-form input[type="type"],
-				#signup-form input[type="password"],
-				#signup-form input[type="email"] {
-					width: 100%;
-				}
-
-				#signup-form > * {
-					margin: 1.25em 0 0 0;
-				}
-
-				#signup-form .message {
-					bottom: -1.5em;
-					font-size: 0.9em;
-					height: 1em;
-					left: 0;
-					line-height: inherit;
-					margin-top: 0;
-					position: absolute;
-				}
-
-		}
 
 /* Footer */
 
