@@ -14,6 +14,7 @@ namespace ChatBridgeBot.Command
             yield return new CreateBridgeCommand();
             yield return new OpenBridgeCommand();
             yield return new CloseBridgeCommand();
+            yield return new HelpCommand();
             yield return new MessagePipeCommand();
         }
     }

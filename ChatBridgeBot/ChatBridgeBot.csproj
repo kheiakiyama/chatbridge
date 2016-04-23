@@ -134,6 +134,7 @@
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="ChatRequest.cs" />
+    <Compile Include="Command\HelpCommand.cs" />
     <Compile Include="Command\MessagePipeCommand.cs" />
     <Compile Include="Command\Commands.cs" />
     <Compile Include="Command\CommandTool.cs" />
