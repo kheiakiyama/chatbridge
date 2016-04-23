@@ -1,6 +1,3 @@
-chat-bridge
-=============
-
 # ChatBridge ‚É‚Â‚¢‚Ä
 
 [DEMO](http://chatbridge.azurewebsites.net/)  
