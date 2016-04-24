@@ -10,7 +10,7 @@
     },
     "siteLocation": {
       "type": "string",
-      "defaultValue":"East US"
+      "defaultValue":"Japan East"
     },
     "sku": {
       "type": "string",
@@ -44,6 +44,15 @@
     "isMercurial":{
       "type": "bool",
       "defaultValue":false
+    },
+    "appId": {
+      "type": "string"
+    },
+    "appSecret": {
+      "type": "string"
+    },
+    "storageConnectionString": {
+      "type": "string"
     }
   },
   "resources": [
@@ -75,6 +84,36 @@
         "serverFarmId": "[parameters('hostingPlanName')]"
       },
       "resources": [
+        {
+          "apiVersion": "2014-04-01",
+          "type": "config",
+          "name": "web",
+          "dependsOn": [
+            "[concat('Microsoft.Web/Sites/', parameters('siteName'))]"
+          ],
+          "properties": {
+            "phpVersion": "",
+            "webSocketsEnabled": true,
+            "appSettings": [
+              {
+                "name": "WEBSITE_NODE_DEFAULT_VERSION",
+                "value": "4.2.3"
+              },
+              {
+                "name": "AppId",
+                "value": "[parameters('appId')]"
+              },
+              {
+                "name": "AppSecret",
+                "value": "[parameters('appSecret')]"
+              },
+              {
+                "name": "StorageConnectionString",
+                "value": "[parameters('storageConnectionString')]"
+              }
+            ]
+          }
+        },
         {
           "apiVersion": "2015-04-01",
           "name": "web",
