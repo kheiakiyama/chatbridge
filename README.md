@@ -1,11 +1,7 @@
-# ChatBridge
+# ChatBridge について
 
-[![Deploy to Azure](http://azuredeploy.net/deploybutton.svg)](https://deploy.azure.com/?repository=https://github.com/kheiakiyama/chatbridge?ptmpl=azuredeploy.json)
+[DEMO](http://chatbridge.azurewebsites.net/)  
 
 ChatBridge は異なるチャットサービス間でテキストメッセージをやりとりするサービスです  
 現在 Slack, Skype, WebChat に対応しています
-
-## DEMO
-
-[AzureAppService](http://chatbridge.azurewebsites.net/)  
 
